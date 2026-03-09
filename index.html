@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Osvaldo Aguilar" />
+    <meta name="description" content="Explicación de las etiquetas estructurales de HTML" />
+    <title>Etiquetas Estructurales HTML</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Fira+Code:wght@400;500&display=swap');
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --bg: #0f1117;
+            --surface: #1a1d27;
+            --surface2: #22263a;
+            --accent: #6c63ff;
+            --accent2: #a78bfa;
+            --text: #e2e8f0;
+            --muted: #8892b0;
+            --code-bg: #13151f;
+            --border: #2d3050;
+            --tag-html: #f97316;
+            --tag-head: #22d3ee;
+            --tag-meta: #a3e635;
+            --tag-title: #f472b6;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            padding: 2rem 1rem 4rem;
+            line-height: 1.7;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+
+        header .badge {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--accent), var(--accent2));
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            padding: 0.3rem 1rem;
+            border-radius: 999px;
+            margin-bottom: 1rem;
+        }
+
+        header h1 {
+            font-size: clamp(1.8rem, 5vw, 2.8rem);
+            font-weight: 700;
+            background: linear-gradient(90deg, #fff 30%, var(--accent2));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.75rem;
+        }
+
+        header p {
+            color: var(--muted);
+            font-size: 1rem;
+            max-width: 520px;
+            margin: 0 auto;
+        }
+
+        /* ---- Árbol visual ---- */
+        .tree-section {
+            max-width: 700px;
+            margin: 0 auto 3.5rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .tree-section h2 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            margin-bottom: 1.2rem;
+        }
+
+        .tree {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+            line-height: 2;
+        }
+
+        .tree span.tag {
+            font-weight: 600;
+        }
+
+        .tree .c-html {
+            color: var(--tag-html);
+        }
+
+        .tree .c-head {
+            color: var(--tag-head);
+        }
+
+        .tree .c-meta {
+            color: var(--tag-meta);
+        }
+
+        .tree .c-title {
+            color: var(--tag-title);
+        }
+
+        .tree .c-body {
+            color: var(--muted);
+        }
+
+        .tree .indent1 {
+            padding-left: 1.5rem;
+        }
+
+        .tree .indent2 {
+            padding-left: 3rem;
+        }
+
+        /* ---- Cards ---- */
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 960px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 1.75rem;
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .card.html::before {
+            background: var(--tag-html);
+        }
+
+        .card.head::before {
+            background: var(--tag-head);
+        }
+
+        .card.meta::before {
+            background: var(--tag-meta);
+        }
+
+        .card.title::before {
+            background: var(--tag-title);
+        }
+
+        .card:hover.html {
+            border-color: var(--tag-html);
+        }
+
+        .card:hover.head {
+            border-color: var(--tag-head);
+        }
+
+        .card:hover.meta {
+            border-color: var(--tag-meta);
+        }
+
+        .card:hover.title {
+            border-color: var(--tag-title);
+        }
+
+        .card-tag {
+            font-family: 'Fira Code', monospace;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.6rem;
+        }
+
+        .html .card-tag {
+            color: var(--tag-html);
+        }
+
+        .head .card-tag {
+            color: var(--tag-head);
+        }
+
+        .meta .card-tag {
+            color: var(--tag-meta);
+        }
+
+        .title .card-tag {
+            color: var(--tag-title);
+        }
+
+        .card h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-bottom: 0.5rem;
+        }
+
+        .card p {
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin-bottom: 1rem;
+        }
+
+        .card-example {
+            background: var(--code-bg);
+            border-radius: 8px;
+            padding: 0.85rem 1rem;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            color: #cdd6f4;
+            white-space: pre;
+            overflow-x: auto;
+            border: 1px solid var(--border);
+        }
+
+        /* ---- Dato curioso ---- */
+        .note {
+            max-width: 700px;
+            margin: 2.5rem auto 0;
+            background: var(--surface2);
+            border-left: 4px solid var(--accent);
+            border-radius: 8px;
+            padding: 1rem 1.25rem;
+            font-size: 0.88rem;
+            color: var(--muted);
+        }
+
+        .note strong {
+            color: var(--accent2);
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="badge">Estructura HTML</div>
+        <h1>Etiquetas de Estructura Global</h1>
+        <p>Definen la estructura global y la información técnica del documento antes de que el navegador muestre
+            cualquier contenido.</p>
+    </header>
+
+    <!-- Árbol de estructura -->
+    <section class="tree-section">
+        <h2>📂 Árbol del documento</h2>
+        <div class="tree">
+            <div><span class="tag c-html">&lt;html&gt;</span></div>
+            <div class="indent1"><span class="tag c-head">&lt;head&gt;</span></div>
+            <div class="indent2"><span class="tag c-meta">&lt;meta charset="UTF-8"&gt;</span></div>
+            <div class="indent2"><span class="tag c-title">&lt;title&gt;</span>Mi Página<span
+                    class="tag c-title">&lt;/title&gt;</span></div>
+            <div class="indent1"><span class="tag c-head">&lt;/head&gt;</span></div>
+            <div class="indent1"><span class="c-body">&lt;body&gt; … &lt;/body&gt;</span></div>
+            <div><span class="tag c-html">&lt;/html&gt;</span></div>
+        </div>
+    </section>
+
+    <!-- Cards explicativas -->
+    <div class="cards">
+
+        <!-- <html> -->
+        <div class="card html">
+            <div class="card-tag">&lt;html&gt;</div>
+            <h3>Raíz del documento</h3>
+            <p>Es el contenedor principal que envuelve <strong>todo</strong> el contenido de la página. Le indica al
+                navegador que el archivo es un documento HTML.</p>
+            <div class="card-example">&lt;html lang="es"&gt;
+                &lt;!-- todo va aquí --&gt;
+                &lt;/html&gt;</div>
+        </div>
+
+        <!-- <head> -->
+        <div class="card head">
+            <div class="card-tag">&lt;head&gt;</div>
+            <h3>Contenedor de metadatos</h3>
+            <p>Almacena información <em>no visible</em> para el usuario: título, estilos, scripts y metadatos. El
+                navegador la usa para cargar y configurar la página.</p>
+            <div class="card-example">&lt;head&gt;
+                &lt;meta charset="UTF-8"&gt;
+                &lt;title&gt;Mi Página&lt;/title&gt;
+                &lt;link rel="stylesheet" href="style.css"&gt;
+                &lt;/head&gt;</div>
+        </div>
+
+        <!-- <meta> -->
+        <div class="card meta">
+            <div class="card-tag">&lt;meta&gt;</div>
+            <h3>Información técnica</h3>
+            <p>Proporciona datos sobre el documento: codificación de caracteres, autor, descripción para buscadores y
+                configuración de la vista en móviles.</p>
+            <div class="card-example">&lt;!-- Codificación --&gt;
+                &lt;meta charset="UTF-8"&gt;
+
+                &lt;!-- Autor --&gt;
+                &lt;meta name="author" content="Ana López"&gt;
+
+                &lt;!-- Vista en móvil --&gt;
+                &lt;meta name="viewport"
+                content="width=device-width, initial-scale=1.0"&gt;</div>
+        </div>
+
+        <!-- <title> -->
+        <div class="card title">
+            <div class="card-tag">&lt;title&gt;</div>
+            <h3>Título de la pestaña</h3>
+            <p>Define el texto que aparece en la <strong>pestaña del navegador</strong> y en los resultados de búsqueda
+                de Google. Debe ser descriptivo y único.</p>
+            <div class="card-example">&lt;title&gt;
+                Tienda Online – Zapatos Deportivos
+                &lt;/title&gt;</div>
+        </div>
+
+    </div>
+
+    <div class="note">
+        <strong>💡 Dato clave:</strong> Todo lo que está dentro de <code>&lt;head&gt;</code> es <em>invisible</em> en la
+        página, pero es esencial: sin él el navegador no sabría cómo mostrar los caracteres, cuál es el título o qué
+        estilos aplicar.
+    </div>
+
+</body>
+
+</html>
